@@ -25,33 +25,7 @@ internal class DeviceInfo {
     }
     
     private static func getiOSUserAgent() -> String {
-        if !isRunningInExtension() {
-            let webView = WKWebView(frame: .zero)
-            var userAgent = ""
-            
-            let semaphore = DispatchSemaphore(value: 0)
-            
-            DispatchQueue.main.async {
-                webView.evaluateJavaScript("navigator.userAgent") { (result, error) in
-                    if let agent = result as? String {
-                        userAgent = agent
-                    }
-                    semaphore.signal()
-                }
-            }
-            
-            _ = semaphore.wait(timeout: .now() + 1.0)
-
-            userAgent += " OpenPanel/\(OpenPanel.sdkVersion)"
-            
-            if userAgent.isEmpty {
-                userAgent = getBasicUserAgent()
-            }
-            
-            return userAgent
-        } else {
-            return getBasicUserAgent()
-        }
+        getBasicUserAgent()
     }
 
     private static func getBasicUserAgent() -> String {

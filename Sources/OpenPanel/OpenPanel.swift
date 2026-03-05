@@ -231,6 +231,10 @@ public struct AnyCodable: Codable {
             self.value = value
         } else if let value = try? container.decode(Double.self) {
             self.value = value
+        } else if let value = try? container.decode(Float.self) {
+            self.value = value
+        } else if let value = try? container.decode(UUID.self) {
+            self.value = value
         } else if let value = try? container.decode(Bool.self) {
             self.value = value
         } else if let value = try? container.decode([AnyCodable].self) {
@@ -250,6 +254,10 @@ public struct AnyCodable: Codable {
         case let value as Int:
             try container.encode(value)
         case let value as Double:
+            try container.encode(value)
+        case let value as Float:
+            try container.encode(value)
+        case let value as UUID:
             try container.encode(value)
         case let value as Bool:
             try container.encode(value)
